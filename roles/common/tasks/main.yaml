@@ -1,0 +1,49 @@
+---
+# Common plays that will run on all qdrant vector db nodes
+# to configure system settings and install core utils
+
+- name: Update apt packages
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Upgrade all system packages to latest version
+  ansible.builtin.apt:
+    upgrade: dist
+
+- name: Install core system utils
+  ansible.builtin.apt:
+    pkg:
+      - strace
+      - ltrace
+      - gdb
+      - iproute2
+      - dnsutils
+      - tmux
+      - vim
+      - sipcalc
+      - gcc
+      - g++
+      - lsof
+      - iotop
+      - sysstat
+      - blktrace
+      - fdisk
+      - htop
+      - jq
+      - net-tools
+      - ncdu
+      - mtr
+      - python3.11-venv
+      - tcpdump
+    update_cache: yes
+    state: present
+
+- name: Remove dependencies that are no longer required and purge their configuration files
+  ansible.builtin.apt:
+    autoremove: yes
+    purge: true
+
+- name: Set timezone to Europe/Athens
+  community.general.timezone:
+    name: Europe/Athens
+

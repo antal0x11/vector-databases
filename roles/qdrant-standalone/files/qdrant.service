@@ -1,0 +1,14 @@
+[Unit]
+Description=Qdrant Vector Database
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/qdrant --config-path /etc/qdrant/config.yaml
+Restart=always
+TimeoutSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
