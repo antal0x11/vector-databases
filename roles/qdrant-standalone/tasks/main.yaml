@@ -1,0 +1,33 @@
+---
+# Install and configure qdrant for standalone mode
+
+- name: Fetch qdrant version 1.15.4 deb package and verify its integrity (sha256)
+  ansible.builtin.get_url:
+    url: https://github.com/qdrant/qdrant/releases/download/v1.15.4/qdrant_1.15.4-1_amd64.deb
+    dest: /opt
+    checksum: sha256:479114f0762c70320c43a4bf36b2099cdbad214bfd8285c50f1919d938d8fedf
+
+- name: Install qdrant version 1.15.4
+  ansible.builtin.apt:
+    deb: /opt/qdrant_1.15.4-1_amd64.deb
+
+- name: Install qdrant.service to manage qdrant through systemd
+  ansible.builtin.copy:
+    src: qdrant.service
+    dest: /etc/systemd/system/qdrant.service
+
+- name: Systemd-daemon reload to pick up the qdrant.service
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Set up qdrant configuration file
+  ansible.builtin.copy:
+    src: config.yaml
+    dest: /etc/qdrant/config.yaml
+
+- name: Enable and start qdrant.service
+  ansible.builtin.systemd_service:
+    name: qdrant
+    state: started
+    enabled: true
+
