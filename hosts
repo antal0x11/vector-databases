@@ -1,3 +1,7 @@
 [standalone]
-qdrant-server-001
+qdrant_server_000
+
+[qdrant-distributed]
+qdrant_server_001
+qdrant_server_002
 
