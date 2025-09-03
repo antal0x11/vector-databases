@@ -7,3 +7,6 @@
   roles:
     - qdrant-standalone
 
+- hosts: qdrant-distributed
+  roles:
+    - qdrant-distributed

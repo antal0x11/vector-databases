@@ -1,0 +1,18 @@
+storage:
+  # Where to store all the data
+  storage_path: /var/lib/qdrant/storage
+
+  # Where to store snapshots
+  snapshots_path: /var/lib/qdrant/snapshots
+
+service:
+  static_content_dir: /var/lib/qdrant/static
+
+telemetry_disabled: true
+
+cluster:
+  enabled: true
+  p2p:
+    port: 6335
+  consensus:
+    tick_period_ms: 100
