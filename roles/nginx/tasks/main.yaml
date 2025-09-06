@@ -1,0 +1,41 @@
+---
+# Install and configure nginx as a reverse proxy for qdrant API and UI
+
+- name: Install nginx debian package
+  ansible.builtin.apt:
+    pkg:
+      - nginx
+    update_cache: yes
+    state: present
+
+- name: Remove dependencies that are no longer required and purge their configuration files
+  ansible.builtin.apt:
+    autoremove: yes
+    purge: true
+
+- name: Configure nginx as a reverse proxy
+  ansible.builtin.template:
+    src: qdrant-proxy.j2
+    dest: /etc/nginx/sites-available/qdrant-proxy
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Enable proxy configuration in sites enabled
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/qdrant-proxy
+    dest: /etc/nginx/sites-enabled/qdrant-proxy
+    owner: root
+    group: root
+    mode: "0644"
+    state: link
+
+- name: Disable default configuration in sites enabled
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Reload nginx configuration
+  ansible.builtin.systemd_service:
+    name: nginx
+    state: reloaded
