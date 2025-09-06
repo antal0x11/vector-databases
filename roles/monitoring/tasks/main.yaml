@@ -1,0 +1,27 @@
+---
+# Install prometheus node exporter for hardware and OS metrics
+
+- name: Install node exporter(debian package)
+  ansible.builtin.apt:
+    pkg:
+      - prometheus-node-exporter
+    update_cache: yes
+    state: present
+
+- name: Remove dependencies that are no longer required and purge their configuration files
+  ansible.builtin.apt:
+    autoremove: yes
+    purge: true
+
+- name: Configure node exporter arguments for collectors
+  ansible.builtin.copy:
+    src: node_exporter_config
+    dest: /etc/default/prometheus-node-exporter
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Restart prometheus node exporter
+  ansible.builtin.systemd_service:
+    name: prometheus-node-exporter
+    state: restarted
