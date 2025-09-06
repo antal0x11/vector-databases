@@ -1,8 +1,8 @@
 127.0.0.1	localhost
 ::1		localhost ip6-localhost ip6-loopback
 
-10.0.1.5 qdrant-server-001
-10.0.1.6 qdrant-server-002
+10.0.1.6 qdrant-server-001
+10.0.1.5 qdrant-server-002
 
 ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
