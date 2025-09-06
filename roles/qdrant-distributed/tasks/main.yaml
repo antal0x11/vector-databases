@@ -18,13 +18,13 @@
 
 - name: Install master qdrant.service to manage qdrant master through systemd
   ansible.builtin.template:
-    src: qdrant-master.service
+    src: qdrant-master.service.j2
     dest: /etc/systemd/system/qdrant.service
   when: inventory_hostname == qdrant_master
 
 - name: Install worker qdrant.service to manage qdrant workers through systemd
   ansible.builtin.template:
-    src: qdrant-worker.service
+    src: qdrant-worker.service.j2
     dest: /etc/systemd/system/qdrant.service
   when: inventory_hostname != qdrant_master
 

@@ -3,6 +3,7 @@
   roles:
     - common
     - monitoring
+    - nginx
 
 - hosts: standalone
   roles:
