@@ -3,7 +3,6 @@
   roles:
     - common
     - monitoring
-    - nginx
 
 - hosts: standalone
   roles:
@@ -12,3 +11,8 @@
 - hosts: qdrant-distributed
   roles:
     - qdrant-distributed
+    - nginx
+
+- hosts: chromadb-servers
+  roles:
+    - chromadb-standalone

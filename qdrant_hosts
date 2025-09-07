@@ -1,4 +1,4 @@
-[standalone]
+[qdrant-standalone]
 qdrant-server-000
 
 [qdrant-distributed]
