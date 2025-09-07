@@ -1,0 +1,15 @@
+[Unit]
+Description=Chroma Database
+After=network.target
+
+[Service]
+Type=simple
+Environment="ANONYMIZED_TELEMETRY=False"
+ExecStart=/opt/chromadb/bin/chroma run /opt/chroma_config.yaml
+Restart=always
+TimeoutSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

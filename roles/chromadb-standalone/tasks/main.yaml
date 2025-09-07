@@ -1,0 +1,44 @@
+---
+# Install chromadb in standalone mode
+
+- name: Install chromadb
+  ansible.builtin.pip:
+    name: chromadb
+    virtualenv: /opt/chromadb
+    state: present
+    extra_args: --no-cache
+
+- name: Add ENV variable ANONYMIZED_TELEMETRY to disable chromadb telemetry
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    line: "ANONYMIZED_TELEMETRY=False"
+    create: yes
+
+- name: Create storage directory of chromadb
+  ansible.builtin.file:
+    path: /var/lib/chromadb/storage
+    state: directory
+    mode: "0755"
+
+- name: Install chromadb configuration file
+  ansible.builtin.copy:
+    src: chroma_config.yaml
+    dest: /opt/chroma_config.yaml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Install chromadb.service to manage chromadb through systemd
+  ansible.builtin.template:
+    src: chromadb.service.j2
+    dest: /etc/systemd/system/chromadb.service
+
+- name: Systemd-daemon reload to pick up the chromadb.service
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Enable and start chromadb.service
+  ansible.builtin.systemd_service:
+    name: chromadb
+    state: started
+    enabled: true
