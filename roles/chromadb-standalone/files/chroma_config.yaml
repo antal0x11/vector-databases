@@ -1,5 +1,5 @@
 persist_path: /var/lib/chromadb/storage
-port: 6333
+port: 8000
 listen_address: "0.0.0.0"
 max_payload_size_bytes: 41943040
 cors_allow_origins: ["*"]
